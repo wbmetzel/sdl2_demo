@@ -1,4 +1,4 @@
-OBJS = driver.cpp
+OBJS = driver.cpp Texture.cpp Character.cpp
 CC = g++
 INCLUDE_PATHS = -IC:\mingw_dev_lib\include\SDL2
 LIBRARY_PATHS = -LC:\mingw_dev_lib\lib
