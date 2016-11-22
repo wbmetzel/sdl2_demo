@@ -4,48 +4,38 @@ and may not be redistributed without written permission.*/
 //Using SDL, SDL_image, standard IO, and strings
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Game.h"
 #include "Texture.h"
 #include "Character.h"
 #include <stdio.h>
 #include <string>
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 512;
-const int SCREEN_HEIGHT = 480;
-
 char* BACKGROUNDS[] = {"Resources/mario_background2.png"};
 
 // // // // // // // // // // // // // // // // // // // //
+const int WALKING_FRAMES = 6;
 
-const int FRAMES = 6;
-const int WALKING_ANIMATION_FRAMES = FRAMES;
 
-bool init(SDL_Window *&window, SDL_Renderer *&renderer);
 bool loadLevel(Texture &background,Character &character, SDL_Renderer *&renderer);
-void close(SDL_Window *&window, SDL_Renderer *&renderer);
 
 
 //Walking animation
-
-SDL_Rect gSpriteClips[ WALKING_ANIMATION_FRAMES ];
+SDL_Rect gSpriteClips[ WALKING_FRAMES ];
 SDL_Rect spriteIdle[4];
-//Texture gSpriteSheetTexture;
 
 
 int main( int argc, char* args[] )
 {
-    SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
-    Texture backgroundTexture;
-    Character stimpy;
+    Game *newGame;
 
 	//Start up SDL and create window
-	if( !init(window,renderer) )
+	if( newGame->initialize() )
 	{
-		printf( "Failed to initialize!\n" );
+        newGame->run();
 	}
-	else
+/*	else
 	{
+
 		//Load media
 		if( !loadLevel(backgroundTexture, stimpy, renderer) )
 		{
@@ -53,11 +43,6 @@ int main( int argc, char* args[] )
 		}
 		else
 		{
-			//Main loop flag
-			bool quit = false;
-
-			//Event handler
-			SDL_Event e;
 
 			//Current animation frame
 			int frame = 0;
@@ -105,6 +90,9 @@ int main( int argc, char* args[] )
                     frame = 0;
                     idleCounter = 0;
                 }
+*/
+
+
 
 
 /*
@@ -119,58 +107,18 @@ int main( int argc, char* args[] )
 				++frame;
 
 				//Cycle animation
-				if( frame / FRAMES >= WALKING_ANIMATION_FRAMES )
+				if( frame / WALKING_FRAMES >= WALKING_FRAMES )
 				{
 					frame = 0;
 				}
 
+
+
+			}
+		}
+	}
 */
-
-
-
-
-			}
-		}
-	}
-
-	//Free resources and close SDL
-	close(window,renderer);
-
 	return 0;
-}
-
-
-bool init(SDL_Window *&window, SDL_Renderer *&renderer)
-{
-    if(SDL_Init( SDL_INIT_VIDEO ) >= 0)
-	{
-		  // Set texture filtering to linear
-		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
-		{
-			SDL_Log( "Warning: Linear texture filtering not enabled!" );
-		}
-
-		window = SDL_CreateWindow( "Stimpy's Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if(window != NULL)
-		{
-			  // Create v-synced renderer for window
-			renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			if( renderer != NULL )
-			{
-				//Initialize renderer color
-				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
-
-				//Initialize PNG loading
-				//int imgFlags = IMG_INIT_PNG;
-				if(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)
-				{
-					return true;
-				}
-			}
-		}
-	}
-
-	return false;
 }
 
 
@@ -283,18 +231,3 @@ bool loadLevel(Texture &background, Character &character, SDL_Renderer *&rendere
 }
 */
 
-
-void close(SDL_Window *&window, SDL_Renderer *&renderer)
-{
-	//Free loaded images
-	//gSpriteSheetTexture.free();
-
-	SDL_DestroyRenderer( renderer );
-	renderer = NULL;
-
-	SDL_DestroyWindow( window );
-	window = NULL;
-
-	IMG_Quit();
-	SDL_Quit();
-}

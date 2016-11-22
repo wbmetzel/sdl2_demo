@@ -1,22 +1,6 @@
 
 #include "Texture.h"
 
-/*
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
-
-SDL_Event e;
-
-//Walking animation
-const int WALKING_ANIMATION_FRAMES = FRAMES;
-SDL_Rect gSpriteClips[ WALKING_ANIMATION_FRAMES ];
-SDL_Rect spriteIdle[4];
-LTexture gSpriteSheetTexture;
-LTexture gBackgroundTexture;
-*/
 
 /***************************************
 *
@@ -132,54 +116,68 @@ void Texture::render(const int &x, const int &y, SDL_Renderer *&renderer, SDL_Re
 	SDL_RenderCopy( renderer, this->resource, clip, &renderQuad );
 }
 
-void Texture::setColor( Uint8 red, Uint8 green, Uint8 blue )
+
+/***************************************
+*
+* F(x): setColor
+* Date: 22 Nov 2016
+* Description: Texture colour modulation
+*
+***************************************/
+void Texture::setColor(const Uint8 &red, const Uint8 &green, const Uint8 &blue)
 {
-	  // Modulate texture rgb
 	SDL_SetTextureColorMod(this->resource, red, green, blue);
 }
 
+
+/***************************************
+*
+* F(x): setBlendMode
+* Date: 22 Nov 2016
+* Description: Texture Blending
+*
+***************************************/
 void Texture::setBlendMode(SDL_BlendMode blending)
 {
 	  // Set blending function
 	SDL_SetTextureBlendMode(this->resource, blending );
 }
 
-void Texture::setAlpha( Uint8 alpha )
+
+/***************************************
+*
+* F(x): setAlpha
+* Date: 22 Nov 2016
+* Description:Texture alpha modulation
+*
+***************************************/
+void Texture::setAlpha(const Uint8 &alpha)
 {
-	  // Modulate texture alpha
-	SDL_SetTextureAlphaMod( this->resource, alpha );
+	SDL_SetTextureAlphaMod(this->resource, alpha);
 }
 
 
-/*
-void LTexture::render(SDL_Rect* clip )
-{
-	//Set rendering space and render to screen
-	SDL_Rect renderQuad = { mPosX, mPosY, mWidth, mHeight };
-
-	//Set clip rendering dimensions
-	if( clip != NULL )
-	{
-	    renderQuad.x = clip->x;
-	    renderQuad.y = clip->y;
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
-
-	//Render to screen
-	SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
-}
-*/
-
-
+/***************************************
+*
+* F(x): getWidth
+* Date: 22 Nov 2016
+* Description: width accessor
+*
+***************************************/
 int Texture::getWidth()
 {
 	return this->width;
 }
 
+
+/***************************************
+*
+* F(x): getHeight
+* Date: 22 Nov 2016
+* Description: height accessor
+*
+***************************************/
 int Texture::getHeight()
 {
 	return this->height;
 }
-
-

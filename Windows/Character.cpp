@@ -2,6 +2,13 @@
 #include "Character.h"
 
 
+/***************************************
+*
+* F(x): Constructor
+* Date: 22 Nov 2016
+* Description: Initialize instance
+*
+***************************************/
 Character::Character()
 {
     this->posX = 0;
@@ -10,28 +17,44 @@ Character::Character()
     this->velY = 0;
 }
 
+
+/***************************************
+*
+* F(x): Destructor
+* Date: 22 Nov 2016
+* Description: Destroy instance
+*
+***************************************/
 Character::~Character()
 {
+    this->clearMemory();
 }
 
-/*
-void LTexture::handleEvent(SDL_Event &e)
+
+/***************************************
+*
+* F(x): handleEvent
+* Date: 22 Nov 2016
+* Description: Handle events to object
+*
+***************************************/
+void Character::handleEvent(SDL_Event &e)
 {
     if(e.type == SDL_KEYDOWN && e.key.repeat == 0)
     {
         switch(e.key.keysym.sym)
         {
         case SDLK_UP:
-            mVelY -= VELOCITY;
+            velY -= VELOCITY;
             break;
         case SDLK_DOWN:
-            mVelY += VELOCITY;
+            velY += VELOCITY;
             break;
         case SDLK_LEFT:
-            mVelX -= VELOCITY;
+            velX -= VELOCITY;
             break;
         case SDLK_RIGHT:
-            mVelX += VELOCITY;
+            velX += VELOCITY;
             break;
 
         }
@@ -41,21 +64,21 @@ void LTexture::handleEvent(SDL_Event &e)
         switch(e.key.keysym.sym)
         {
         case SDLK_UP:
-            mVelY += VELOCITY;
+            velY += VELOCITY;
             break;
         case SDLK_DOWN:
-            mVelY -= VELOCITY;
+            velY -= VELOCITY;
             break;
         case SDLK_LEFT:
-            mVelX += VELOCITY;
+            velX += VELOCITY;
             break;
         case SDLK_RIGHT:
-            mVelX -= VELOCITY;
+            velX -= VELOCITY;
             break;
         }
     }
 }
-
+/*
 void LTexture::movement()
 {
     mPosX += mVelX;
@@ -73,3 +96,55 @@ void LTexture::movement()
     }
 }
 */
+
+
+/***************************************
+*
+* F(x): getPosX
+* Date: 22 Nov 2016
+* Description: X position accessor
+*
+***************************************/
+int Character::getPosX()
+{
+    return this->posX;
+}
+
+
+/***************************************
+*
+* F(x): getPosY
+* Date: 22 Nov 2016
+* Description: Y position accessor
+*
+***************************************/
+int Character::getPosY()
+{
+    return this->posY;
+}
+
+
+/***************************************
+*
+* F(x): getVelX
+* Date: 22 Nov 2016
+* Description: X Velocity accessor
+*
+***************************************/
+int Character::getVelX()
+{
+    return this->velX;
+}
+
+
+/***************************************
+*
+* F(x): getVelY
+* Date: 22 Nov 2016
+* Description: Y Velocity accessor
+*
+***************************************/
+int Character::getVelY()
+{
+    return this->velY;
+}

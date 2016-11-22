@@ -12,14 +12,16 @@ class Character : public Texture
 		Character();
 		~Character();
 
-		// // void render(SDL_Rect* clip = NULL);//Renders texture at given point
+		// // void render(SDL_Rect* clip = NULL);
 		// // void movement();
-		// // void handleEvent(SDL_Event &e);
+		void handleEvent(SDL_Event &e);
 
-		// // int getPosX();
-		// // int getPosY();
-
-	private:
+		  // Accessors
+		int getPosX();
+		int getPosY();
+        int getVelX();
+        int getVelY();
+	protected:
         int posX, posY;
         int velX, velY;
 
