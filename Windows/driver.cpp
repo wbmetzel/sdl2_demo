@@ -5,6 +5,7 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Texture.h"
+#include "Character.h"
 #include <stdio.h>
 #include <string>
 
@@ -20,7 +21,7 @@ const int FRAMES = 6;
 const int WALKING_ANIMATION_FRAMES = FRAMES;
 
 bool init(SDL_Window *&window, SDL_Renderer *&renderer);
-bool loadLevel(Texture &background, SDL_Renderer *&renderer);
+bool loadLevel(Texture &background,Character &character, SDL_Renderer *&renderer);
 void close(SDL_Window *&window, SDL_Renderer *&renderer);
 
 
@@ -36,7 +37,7 @@ int main( int argc, char* args[] )
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     Texture backgroundTexture;
-
+    Character stimpy;
 
 	//Start up SDL and create window
 	if( !init(window,renderer) )
@@ -46,7 +47,7 @@ int main( int argc, char* args[] )
 	else
 	{
 		//Load media
-		if( !loadLevel(backgroundTexture,renderer) )
+		if( !loadLevel(backgroundTexture, stimpy, renderer) )
 		{
 			printf( "Failed to load media!\n" );
 		}
@@ -85,9 +86,25 @@ int main( int argc, char* args[] )
 
 				backgroundTexture.render(0,0,renderer,NULL);
 
+                SDL_Rect *currentClip = &spriteIdle[frame / 4];
+
+				stimpy.render( currentClip->w - 30, SCREEN_HEIGHT - (currentClip->h * 2) - 10, renderer, currentClip );
 
                   // Render to screen
                 SDL_RenderPresent( renderer );
+				idleCounter++;
+
+				if(idleCounter > 20)
+                {
+                    ++frame;
+                    idleCounter = 19;
+                }
+
+				if(frame / 4 >= 4)
+                {
+                    frame = 0;
+                    idleCounter = 0;
+                }
 
 
 /*
@@ -108,27 +125,8 @@ int main( int argc, char* args[] )
 				}
 
 */
-/*
-				SDL_Rect *currentClip = &spriteIdle[frame / 4];
 
-				gSpriteSheetTexture.render( currentClip->w - 30, SCREEN_HEIGHT - (currentClip->h * 2) - 10, currentClip );
 
-				//Update screen
-				SDL_RenderPresent( gRenderer );
-
-				idleCounter++;
-
-				if(idleCounter > 20)
-                {
-                    ++frame;
-                    idleCounter = 19;
-                }
-
-				if(frame / 4 >= 4)
-                {
-                    frame = 0;
-                    idleCounter = 0;
-                } */
 
 
 			}
@@ -144,59 +142,69 @@ int main( int argc, char* args[] )
 
 bool init(SDL_Window *&window, SDL_Renderer *&renderer)
 {
-	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    if(SDL_Init( SDL_INIT_VIDEO ) >= 0)
 	{
-		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-		return false;
-	}
-	else
-	{
-		//Set texture filtering to linear
+		  // Set texture filtering to linear
 		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
 		{
-			printf( "Warning: Linear texture filtering not enabled!" );
+			SDL_Log( "Warning: Linear texture filtering not enabled!" );
 		}
 
-		//Create window
-		window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( window == NULL )
+		window = SDL_CreateWindow( "Stimpy's Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if(window != NULL)
 		{
-			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
-			return false;
-		}
-		else
-		{
-			//Create vsynced renderer for window
+			  // Create v-synced renderer for window
 			renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-			if( renderer == NULL )
-			{
-				printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-				return false;
-			}
-			else
+			if( renderer != NULL )
 			{
 				//Initialize renderer color
 				SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
 				//Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
-				if( !( IMG_Init( imgFlags ) & imgFlags ) )
+				//int imgFlags = IMG_INIT_PNG;
+				if(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)
 				{
-					printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-					return false;
+					return true;
 				}
 			}
 		}
 	}
 
-	return true;
+	return false;
 }
 
 
-bool loadLevel(Texture &background, SDL_Renderer *&renderer)
+bool loadLevel(Texture &background, Character &character, SDL_Renderer *&renderer)
 {
-    if(!background.loadPNG(BACKGROUNDS[0], renderer, 0x65, 0x8D, 0xD1))
+    if(!background.loadPNG(BACKGROUNDS[0], renderer))
+    {
+        return false;
+    }
+
+    if(character.loadPNG("Resources/stimpy.png", renderer, 0x65, 0x8D, 0xD1))
+    {
+          // Sprite idle clips
+	    spriteIdle[ 0 ].x =   2;
+		spriteIdle[ 0 ].y =  28;
+		spriteIdle[ 0 ].w =  39;
+		spriteIdle[ 0 ].h =  52;
+
+		spriteIdle[ 1 ].x =  41;
+		spriteIdle[ 1 ].y =  28;
+		spriteIdle[ 1 ].w =  39;
+		spriteIdle[ 1 ].h =  52;
+
+		spriteIdle[ 2 ].x =  80;
+		spriteIdle[ 2 ].y =  28;
+		spriteIdle[ 2 ].w =  39;
+		spriteIdle[ 2 ].h =  52;
+
+		spriteIdle[ 3 ].x =  41;
+		spriteIdle[ 3 ].y =  28;
+		spriteIdle[ 3 ].w =  39;
+		spriteIdle[ 3 ].h =  52;
+    }
+    else
     {
         return false;
     }

@@ -4,6 +4,10 @@
 
 Character::Character()
 {
+    this->posX = 0;
+    this->posY = 0;
+    this->velX = 0;
+    this->velY = 0;
 }
 
 Character::~Character()

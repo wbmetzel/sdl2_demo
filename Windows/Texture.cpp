@@ -1,7 +1,5 @@
 
 #include "Texture.h"
-#include <stdio.h>
-#include <string>
 
 /*
 //The window we'll be rendering to
