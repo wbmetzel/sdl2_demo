@@ -5,7 +5,8 @@ and may not be redistributed without written permission.*/
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Game.h"
-#include "Texture.h"
+#include "Environment.h"
+#include "Controls.h"
 #include "Character.h"
 #include <stdio.h>
 #include <string>
@@ -16,7 +17,7 @@ char* BACKGROUNDS[] = {"Resources/mario_background2.png"};
 const int WALKING_FRAMES = 6;
 
 
-bool loadLevel(Texture &background,Character &character, SDL_Renderer *&renderer);
+//bool loadLevel(Texture &background,Character &character, SDL_Renderer *&renderer);
 
 
 //Walking animation
@@ -26,12 +27,27 @@ SDL_Rect spriteIdle[4];
 
 int main( int argc, char* args[] )
 {
-    Game *newGame;
+    Game newGame;
+    Controls controller;
+    bool quit = false;
 
-	//Start up SDL and create window
-	if( newGame->initialize() )
+	if( newGame.initialize() )
 	{
-        newGame->run();
+        Environment environment;
+
+	    while(!quit)
+        {
+
+            while(controller.eventStatus())
+            {
+                quit = controller.exitGame();
+                //gSpriteSheetTexture.handleEvent(e);
+            }
+
+            newGame.refresh();
+
+            environment.loadBackground();
+        }
 	}
 /*	else
 	{
@@ -121,9 +137,10 @@ int main( int argc, char* args[] )
 	return 0;
 }
 
-
+/*
 bool loadLevel(Texture &background, Character &character, SDL_Renderer *&renderer)
 {
+
     if(!background.loadPNG(BACKGROUNDS[0], renderer))
     {
         return false;
@@ -157,7 +174,7 @@ bool loadLevel(Texture &background, Character &character, SDL_Renderer *&rendere
         return false;
     }
     return true;
-}
+}*/
     /*
 	if(!gBackgroundTexture.loadFromFile("Resources/mario_background2.png"))
 	{

@@ -13,6 +13,7 @@ Game::Game()
 {
     this->window = NULL;
     this->renderer = NULL;
+    //this->ready = initialize();
 }
 
 
@@ -53,7 +54,7 @@ bool Game::initialize()
 			SDL_Log( "Warning: Linear texture filtering not enabled!" );
 		}
 
-		this->window = SDL_CreateWindow("Stimpy's Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		this->window = SDL_CreateWindow("Stimpy\'s Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if(this->window != NULL)
 		{
 			  // Create v-synced renderer for window
@@ -78,26 +79,26 @@ bool Game::initialize()
 
 /***************************************
 *
-* F(x): run
-* Date: 22 Nov 2016
-* Description: Run main game loop.
+* F(x): refresh
+* Date: 23 Nov 2016
+* Description: Clear surface in window
 *
 ***************************************/
-void Game::run()
+void Game::refresh()
 {
-    bool quit = false;
-
-    while( !quit )
-    {
-        while( SDL_PollEvent(&e) != 0 )
-        {
-            if( e.type == SDL_QUIT )
-            {
-                quit = true;
-            }
-            //gSpriteSheetTexture.handleEvent(e);
-        }
-    }
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(renderer);
 }
 
 
+/***************************************
+*
+* F(x): initReady
+* Date: 23 Nov 2016
+* Description: Let main know game is initialized
+*
+***************************************/
+bool Game::initReady()
+{
+    return this->ready;
+}

@@ -73,7 +73,7 @@ void Texture::clearMemory()
 * Description: Load resource
 *
 ***************************************/
-bool Texture::loadPNG(char* path, SDL_Renderer *&renderer, Uint8 red, Uint8 green, Uint8 blue)
+bool Texture::loadPNG(char* path, Uint8 red, Uint8 green, Uint8 blue)
 {
 	this->clearMemory();
 
@@ -82,7 +82,7 @@ bool Texture::loadPNG(char* path, SDL_Renderer *&renderer, Uint8 red, Uint8 gree
     if(current != NULL)
     {
         SDL_SetColorKey(current, SDL_TRUE, SDL_MapRGB(current->format, red, green, blue));
-        SDL_Texture *newTexture = SDL_CreateTextureFromSurface(renderer,current);
+        SDL_Texture *newTexture = SDL_CreateTextureFromSurface(this->renderer,current);
         if(newTexture != NULL)
         {
             this->resource = newTexture;
@@ -103,7 +103,7 @@ bool Texture::loadPNG(char* path, SDL_Renderer *&renderer, Uint8 red, Uint8 gree
 * Description: render resource
 *
 ***************************************/
-void Texture::render(const int &x, const int &y, SDL_Renderer *&renderer, SDL_Rect* clip)
+void Texture::render(const int &x, const int &y, SDL_Rect* clip)
 {
     if(clip != NULL)
     {
@@ -113,7 +113,7 @@ void Texture::render(const int &x, const int &y, SDL_Renderer *&renderer, SDL_Re
 
       // Render params
 	SDL_Rect renderQuad = {x, y, this->width, this->height};
-	SDL_RenderCopy( renderer, this->resource, clip, &renderQuad );
+	SDL_RenderCopy( this->renderer, this->resource, clip, &renderQuad );
 }
 
 
