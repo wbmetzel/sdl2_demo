@@ -17,8 +17,8 @@ and may not be redistributed without written permission.*/
 
 
 //Walking animation
-SDL_Rect gSpriteClips[ WALKING_FRAMES ];
-SDL_Rect spriteIdle[4];
+//SDL_Rect gSpriteClips[ WALKING_FRAMES ];
+//SDL_Rect spriteIdle[4];
 
 
 int main( int argc, char* args[] )
@@ -44,6 +44,8 @@ int main( int argc, char* args[] )
             newGame.refresh();
 
             environment.loadBackground();
+
+            newGame.renderScreen();
         }
 	}
 

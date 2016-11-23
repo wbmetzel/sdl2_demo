@@ -90,3 +90,15 @@ void Game::refresh()
     SDL_RenderClear(renderer);
 }
 
+
+/***************************************
+*
+* F(x): renderScreen
+* Date: 23 Nov 2016
+* Description: Put all textures to screen
+*
+***************************************/
+void Game::renderScreen()
+{
+    SDL_RenderPresent( this->renderer );
+}

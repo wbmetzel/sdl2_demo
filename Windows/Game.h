@@ -12,6 +12,7 @@ class Game
         Game();
         ~Game();
         bool initialize();
+        void renderScreen();
         void refresh();
     protected:
         static const int SCREEN_WIDTH = 512;
