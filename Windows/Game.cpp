@@ -90,15 +90,3 @@ void Game::refresh()
     SDL_RenderClear(renderer);
 }
 
-
-/***************************************
-*
-* F(x): initReady
-* Date: 23 Nov 2016
-* Description: Let main know game is initialized
-*
-***************************************/
-bool Game::initReady()
-{
-    return this->ready;
-}

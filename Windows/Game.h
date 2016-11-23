@@ -12,10 +12,7 @@ class Game
         Game();
         ~Game();
         bool initialize();
-        bool initReady();
         void refresh();
-    private:
-        bool ready;
     protected:
         static const int SCREEN_WIDTH = 512;
         static const int SCREEN_HEIGHT = 480;

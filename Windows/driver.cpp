@@ -2,19 +2,15 @@
 and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, and strings
-#include <SDL.h>
-#include <SDL_image.h>
 #include "Game.h"
 #include "Environment.h"
 #include "Controls.h"
-#include "Character.h"
-#include <stdio.h>
-#include <string>
 
-char* BACKGROUNDS[] = {"Resources/mario_background2.png"};
+
+//char* BACKGROUNDS[] = {"Resources/mario_background2.png"};
 
 // // // // // // // // // // // // // // // // // // // //
-const int WALKING_FRAMES = 6;
+//const int WALKING_FRAMES = 6;
 
 
 //bool loadLevel(Texture &background,Character &character, SDL_Renderer *&renderer);
@@ -27,13 +23,14 @@ SDL_Rect spriteIdle[4];
 
 int main( int argc, char* args[] )
 {
+    Environment environment;
     Game newGame;
     Controls controller;
     bool quit = false;
 
 	if( newGame.initialize() )
 	{
-        Environment environment;
+
 
 	    while(!quit)
         {
@@ -49,6 +46,10 @@ int main( int argc, char* args[] )
             environment.loadBackground();
         }
 	}
+
+    return 0;
+}
+
 /*	else
 	{
 
@@ -133,10 +134,10 @@ int main( int argc, char* args[] )
 			}
 		}
 	}
-*/
+
 	return 0;
 }
-
+*/
 /*
 bool loadLevel(Texture &background, Character &character, SDL_Renderer *&renderer)
 {
