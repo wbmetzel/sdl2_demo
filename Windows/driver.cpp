@@ -28,7 +28,7 @@ int main( int argc, char* args[] )
     Controls controller;
     bool quit = false;
 
-	if( newGame.initialize() )
+	if(newGame.initialize())
 	{
 
 
