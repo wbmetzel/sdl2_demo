@@ -4,7 +4,6 @@ and may not be redistributed without written permission.*/
 //Using SDL, SDL_image, standard IO, and strings
 #include "Game.h"
 #include "Environment.h"
-#include "Controls.h"
 
 
 //char* BACKGROUNDS[] = {"Resources/mario_background2.png"};
@@ -23,9 +22,8 @@ and may not be redistributed without written permission.*/
 
 int main( int argc, char* args[] )
 {
-    Environment environment;
+    //Environment environment;
     Game newGame;
-    Controls controller;
     bool quit = false;
 
 	if(newGame.initialize())
@@ -35,15 +33,11 @@ int main( int argc, char* args[] )
 	    while(!quit)
         {
 
-            while(controller.eventStatus())
-            {
-                quit = controller.exitGame();
-                //gSpriteSheetTexture.handleEvent(e);
-            }
+            quit = newGame.eventHandler();
 
             newGame.refresh();
 
-            environment.loadBackground();
+            //environment.loadBackground();
 
             newGame.renderScreen();
         }
