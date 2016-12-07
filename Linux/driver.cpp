@@ -1,18 +1,13 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
-and may not be redistributed without written permission.*/
 
-//Using SDL, SDL_image, standard IO, and strings
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
 
-//Screen dimension constants
 const int SCREEN_WIDTH = 512;
 const int SCREEN_HEIGHT = 480;
 const int FRAMES = 6;
 
-//Texture wrapper class
 class LTexture
 {
 	public:
